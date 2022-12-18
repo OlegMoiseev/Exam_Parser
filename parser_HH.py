@@ -20,12 +20,14 @@ def get_vacancies(*titles: str, save_2_csv=True, only_w_salary=True):
         data.append(e)
 
     vacancy_details = data[0]['items'][0].keys()
-    df_vacancies = pd.DataFrame(columns=list(vacancy_details))
+    columns = list(vacancy_details)
+    df_vacancies = pd.DataFrame(columns=columns)
     ind = 0
     for i in range(len(data)):
         for j in range(len(data[i]['items'])):
             df_vacancies.loc[ind] = data[i]['items'][j]
             ind += 1
+    df_vacancies = df_vacancies[['id', 'name', 'snippet', 'salary', 'alternate_url', 'employer']]
 
     if save_2_csv:
         csv_name = job[0] + ".csv"
