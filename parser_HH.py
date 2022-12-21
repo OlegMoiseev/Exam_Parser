@@ -2,7 +2,15 @@ import requests
 import pandas as pd
 
 
-def get_vacancies(*titles: str, save_2_csv=True, only_w_salary=True):
+def get_vacancies(*titles: str, save_2_csv=True, only_w_salary=True, only_last_day=False):
+    """
+
+    :param titles: name(s) to find
+    :param save_2_csv: set True if need to save results into *.csv file in root. Default True.
+    :param only_w_salary: set True if need to get vacancies only with salary. Default True.
+    :param only_last_day: set True if need to get vacancies only from last day. Default False.
+    :return:
+    """
     number_of_pages = 100
 
     # titles = ['Kafka', 'Airflow', 'Apache Spark', 'Apach Beam', 'MLflow', 'Kuberflow', 'Hadoop', 'DVC', 'Feast']
@@ -14,7 +22,12 @@ def get_vacancies(*titles: str, save_2_csv=True, only_w_salary=True):
     data = []
     for i in range(number_of_pages):
         url = 'https://api.hh.ru/vacancies'
-        par = {'text': job, 'area': '113', 'per_page': '10', 'page': i, 'only_with_salary': only_w_salary}  # 113 – Russia
+        if only_last_day:
+            par = {'text': job, 'area': '113', 'per_page': '10', 'page': i, 'only_with_salary': only_w_salary,
+                   'period': 1}  # 113 – Russia
+        else:
+            par = {'text': job, 'area': '113', 'per_page': '10', 'page': i,
+                   'only_with_salary': only_w_salary}  # 113 – Russia
         r = requests.get(url, params=par)
         e = r.json()
         data.append(e)

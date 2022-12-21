@@ -3,4 +3,4 @@ import parser_HH
 # full list of variants:
 # 'Kafka', 'Airflow', 'Apache Spark', 'Apach Beam', 'MLflow', 'Kuberflow', 'Hadoop', 'DVC', 'Feast'
 
-parser_HH.get_vacancies('Kafka', 'Airflow', 'Apache Spark', 'Apach Beam', 'MLflow', 'Kuberflow', 'Hadoop', 'DVC', 'Feast', save_2_csv=True)
+parser_HH.get_vacancies('Kafka', save_2_csv=True, only_last_day=True)
